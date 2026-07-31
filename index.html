@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jurnal Mengajar Guru SMP</title>
     <style>
+        /* Gaya CSS Tetap Sama */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
         .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         h1, h2 { color: #2c3e50; text-align: center; }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: bold; margin-bottom: 5px; color: #34495e; }
         input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        
         button { color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: 0.3s;}
         .btn-primary { background-color: #3498db; width: 100%; }
         .btn-primary:hover { background-color: #2980b9; }
@@ -20,12 +21,10 @@
         .btn-danger { background-color: #e74c3c; }
         .btn-danger:hover { background-color: #c0392b; }
         .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 3px; }
-        
         .filter-section { background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-top: 20px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; align-items: center;}
         .filter-group { display: flex; align-items: center; gap: 10px; }
         .filter-group select { width: auto; padding: 8px; }
         .action-group { display: flex; gap: 10px; flex-wrap: wrap; }
-        
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background-color: #34495e; color: white; }
@@ -40,89 +39,32 @@
     <h1>Jurnal Mengajar Guru</h1>
     
     <form id="jurnalForm">
-        <div class="form-group">
-            <label>Tanggal</label>
-            <input type="date" id="tanggal" required>
-        </div>
-        <div class="form-group">
-            <label>Mata Pelajaran</label>
-            <select id="mapel" required>
-                <option value="">-- Pilih Mapel --</option>
-                <option value="Pendidikan Agama Islam">PAI</option>
-                <option value="Pendidikan Agama Kristen">PAK</option>
-                <option value="Pancasila">Pendidikan Pancasila / PKn</option>
-                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                <option value="Matematika">Matematika (MTK)</option>
-                <option value="IPA">Ilmu Pengetahuan Alam (IPA)</option>
-                <option value="IPS">Ilmu Pengetahuan Sosial (IPS)</option>
-                <option value="Bahasa Inggris">Bahasa Inggris</option>
-                <option value="PJOK">PJOK</option>
-                <option value="Seni Budaya">Seni Budaya</option>
-                <option value="TIK">Informatika / TIK</option>
-                <option value="BK">Bimbingan Konseling (BK)</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Kelas</label>
-            <select id="kelas" required>
-                <option value="">-- Pilih Kelas --</option>
-                <option value="7A">7A</option>
-                <option value="7B">7B</option>
-                <option value="8A">8A</option>
-                <option value="8B">8B</option>
-                <option value="9A">9A</option>
-                <option value="9B">9B</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Materi / Topik</label>
-            <input type="text" id="materi" placeholder="Contoh: Sistem Tata Surya / Aljabar" required>
-        </div>
-        <div class="form-group">
-            <label>Aktivitas Siswa</label>
-            <textarea id="aktivitas" rows="3" placeholder="Contoh: Mengerjakan LKS, Diskusi Kelompok..." required></textarea>
-        </div>
-        <div class="form-group">
-            <label>Catatan Guru (Opsional)</label>
-            <textarea id="catatan" rows="2" placeholder="Catatan, kendala, atau refleksi setelah mengajar..."></textarea>
-        </div>
+        <!-- Input Form Sama Persis -->
+        <div class="form-group"><label>Tanggal</label><input type="date" id="tanggal" required></div>
+        <div class="form-group"><label>Mata Pelajaran</label><select id="mapel" required><option value="">-- Pilih Mapel --</option><option value="Pendidikan Agama Islam">PAI</option><option value="Pendidikan Agama Kristen">PAK</option><option value="Pancasila">Pancasila</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="Matematika">Matematika</option><option value="IPA">IPA</option><option value="IPS">IPS</option><option value="Bahasa Inggris">Bahasa Inggris</option><option value="PJOK">PJOK</option><option value="Seni Budaya">Seni Budaya</option><option value="TIK">TIK</option><option value="BK">BK</option></select></div>
+        <div class="form-group"><label>Kelas</label><select id="kelas" required><option value="">-- Pilih Kelas --</option><option value="7A">7A</option><option value="7B">7B</option><option value="8A">8A</option><option value="8B">8B</option><option value="9A">9A</option><option value="9B">9B</option></select></div>
+        <div class="form-group"><label>Materi / Topik</label><input type="text" id="materi" required></div>
+        <div class="form-group"><label>Aktivitas Siswa</label><textarea id="aktivitas" rows="3" required></textarea></div>
+        <div class="form-group"><label>Catatan Guru</label><textarea id="catatan" rows="2"></textarea></div>
         <button type="submit" id="btnSimpan" class="btn-primary">Simpan Jurnal</button>
     </form>
 
     <hr style="margin: 30px 0; border: 1px solid #bdc3c7;">
-
     <h2>Riwayat & Output Jurnal</h2>
     
     <div class="filter-section">
         <div class="filter-group">
-            <label>Tampilkan Mapel:</label>
+            <label>Mapel:</label>
             <select id="filterMapel" onchange="tampilkanData()">
-                <option value="semua">Semua Mapel</option>
-                <option value="Pendidikan Agama Islam">PAI</option>
-                <option value="Pendidikan Agama Kristen">PAK</option>
-                <option value="Pancasila">Pancasila</option>
-                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                <option value="Matematika">Matematika</option>
-                <option value="IPA">IPA</option>
-                <option value="IPS">IPS</option>
-                <option value="Bahasa Inggris">Bahasa Inggris</option>
-                <option value="PJOK">PJOK</option>
-                <option value="Seni Budaya">Seni Budaya</option>
-                <option value="TIK">Informatika / TIK</option>
-                <option value="BK">BK</option>
+                <option value="semua">Semua</option><option value="Pendidikan Agama Islam">PAI</option><option value="Pendidikan Agama Kristen">PAK</option><option value="Pancasila">Pancasila</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="Matematika">Matematika</option><option value="IPA">IPA</option><option value="IPS">IPS</option><option value="Bahasa Inggris">Bahasa Inggris</option><option value="PJOK">PJOK</option><option value="Seni Budaya">Seni Budaya</option><option value="TIK">TIK</option><option value="BK">BK</option>
             </select>
         </div>
-
         <div class="filter-group">
             <label>Waktu:</label>
             <select id="filterWaktu" onchange="tampilkanData()">
-                <option value="semua">Semua Waktu</option>
-                <option value="harian">Hari Ini</option>
-                <option value="mingguan">7 Hari Terakhir</option>
-                <option value="bulanan">Bulan Ini</option>
+                <option value="semua">Semua Waktu</option><option value="harian">Hari Ini</option><option value="mingguan">7 Hari Terakhir</option><option value="bulanan">Bulan Ini</option>
             </select>
         </div>
-
         <div class="action-group">
             <button class="btn-export" onclick="exportCSV()">Unduh CSV</button>
             <button class="btn-danger" onclick="hapusSemuaData()">Kosongkan Data</button>
@@ -131,45 +73,55 @@
 
     <table id="jurnalTable">
         <thead>
-            <tr>
-                <th>Tanggal</th>
-                <th>Mapel</th>
-                <th>Kelas</th>
-                <th>Materi</th>
-                <th>Aktivitas</th>
-                <th>Catatan</th>
-                <th>Aksi</th>
-            </tr>
+            <tr><th>Tanggal</th><th>Mapel</th><th>Kelas</th><th>Materi</th><th>Aktivitas</th><th>Catatan</th><th>Aksi</th></tr>
         </thead>
         <tbody>
-            <tr><td colspan="7" class="loading">Memuat data dari Spreadsheet... ⏳</td></tr>
+            <tr><td colspan="7" class="loading">Memuat data dari Database... ⏳</td></tr>
         </tbody>
     </table>
 </div>
 
 <script>
+    // ==========================================
+    // PASTE URL WEB APP ANDA DI BAWAH INI
+    // ==========================================
+    const URL_GAS = "https://script.google.com/macros/s/AKfycbw7E1m_xZwMRM3l_E2tL5sBvu9UjaPhgaA91IKyIXvKdN8d9hLIfGm5-qWAm7AqIGIe/exec";
+    
     const PIN_RAHASIA = "123456";
     document.getElementById('tanggal').valueAsDate = new Date();
     
     let dataJurnal = [];
     let dataYangDitampilkan = [];
 
-    // Mengambil data dari Sheet saat web pertama kali dimuat
-    window.onload = function() {
-        // google.script.run adalah jembatan komunikasi antara HTML dan Code.gs
-        google.script.run.withSuccessHandler(inisialisasiData).getSemuaData();
+    // Mengambil data saat web dibuka (Menggunakan Fetch)
+    window.onload = async function() {
+        try {
+            const response = await fetch(URL_GAS);
+            const data = await response.json();
+            dataJurnal = data;
+            dataJurnal.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+            tampilkanData();
+        } catch (error) {
+            console.error(error);
+            document.querySelector('#jurnalTable tbody').innerHTML = '<tr><td colspan="7" class="empty-state">Gagal memuat data. Pastikan URL benar dan internet aktif.</td></tr>';
+        }
     };
 
-    // Fungsi menerima data dari Backend
-    function inisialisasiData(dataDariSheet) {
-        dataJurnal = dataDariSheet;
-        // Urutkan data terbaru di atas
-        dataJurnal.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
-        tampilkanData();
+    // Fungsi komunikasi POST ke Google Sheets
+    async function kirimDataKeSheet(payload) {
+        try {
+            await fetch(URL_GAS, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+        } catch (error) {
+            console.error("Gagal sinkronisasi:", error);
+            alert("Terjadi kesalahan jaringan, tapi data sementara tersimpan di layar.");
+        }
     }
 
     // Fungsi Menyimpan Data
-    document.getElementById('jurnalForm').addEventListener('submit', function(e) {
+    document.getElementById('jurnalForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const btnSimpan = document.getElementById('btnSimpan');
@@ -177,7 +129,8 @@
         btnSimpan.disabled = true;
 
         const entriBaru = {
-            id: Date.now().toString(), // Pastikan ID berupa string
+            action: "insert",
+            id: Date.now().toString(),
             tanggal: document.getElementById('tanggal').value,
             mapel: document.getElementById('mapel').value,
             kelas: document.getElementById('kelas').value,
@@ -186,26 +139,23 @@
             catatan: document.getElementById('catatan').value || "-"
         };
 
-        // 1. Tampilkan langsung di layar agar responsif
-        dataJurnal.unshift(entriBaru); // Masukkan ke urutan paling atas
+        // Langsung tampil di UI
+        dataJurnal.unshift(entriBaru);
         tampilkanData();
 
-        // 2. Kirim ke Google Sheets (Background process)
-        google.script.run
-            .withSuccessHandler(function() {
-                btnSimpan.innerText = "Simpan Jurnal";
-                btnSimpan.disabled = false;
-                
-                // Kosongkan form tertentu
-                document.getElementById('kelas').value = "";
-                document.getElementById('materi').value = "";
-                document.getElementById('aktivitas').value = "";
-                document.getElementById('catatan').value = "";
-            })
-            .simpanDataKeSheet(entriBaru);
+        // Proses Background ke Spreadsheet
+        await kirimDataKeSheet(entriBaru);
+
+        document.getElementById('kelas').value = "";
+        document.getElementById('materi').value = "";
+        document.getElementById('aktivitas').value = "";
+        document.getElementById('catatan').value = "";
+        
+        btnSimpan.innerText = "Simpan Jurnal";
+        btnSimpan.disabled = false;
     });
 
-    // Fungsi Menampilkan Data ke Tabel
+    // Fungsi Filter & Render Tabel
     function tampilkanData() {
         const tbody = document.querySelector('#jurnalTable tbody');
         tbody.innerHTML = '';
@@ -244,62 +194,44 @@
                 <td>${item.materi}</td>
                 <td>${item.aktivitas}</td>
                 <td>${item.catatan}</td>
-                <td>
-                    <button class="btn-danger btn-sm" onclick="hapusBaris('${item.id}')">Hapus</button>
-                </td>
+                <td><button class="btn-danger btn-sm" onclick="hapusBaris('${item.id}')">Hapus</button></td>
             `;
             tbody.appendChild(tr);
         });
     }
 
-    // Fungsi Hapus Satu Baris Data
-    function hapusBaris(idItem) {
-        let inputPin = prompt("Masukkan PIN untuk menghapus baris data ini:");
-        
+    // Fungsi Hapus Baris
+    async function hapusBaris(idItem) {
+        let inputPin = prompt("Masukkan PIN untuk menghapus:");
         if (inputPin === null) return;
+        
         if (inputPin === PIN_RAHASIA) {
-            let konfirmasi = confirm("Yakin hapus data ini dari Spreadsheet?");
-            if (konfirmasi) {
-                // Hapus dari layar
+            if (confirm("Yakin hapus data ini dari Spreadsheet?")) {
                 dataJurnal = dataJurnal.filter(item => item.id !== idItem);
                 tampilkanData();
-                
-                // Hapus dari Spreadsheet
-                google.script.run.hapusDataDiSheet(idItem);
+                await kirimDataKeSheet({ action: "delete", id: idItem });
             }
-        } else {
-            alert("PIN Salah!");
-        }
+        } else alert("PIN Salah!");
     }
 
-    // Fungsi Hapus SEMUA Data
-    function hapusSemuaData() {
+    // Fungsi Kosongkan Data
+    async function hapusSemuaData() {
         if (dataJurnal.length === 0) return alert("Data sudah kosong!");
-
         let inputPin = prompt("Masukkan PIN untuk mengosongkan SELURUH data:");
-        
         if (inputPin === null) return;
+        
         if (inputPin === PIN_RAHASIA) {
-            let peringatan = confirm("⚠️ PERHATIAN!\nYakin ingin MENGHAPUS SEMUA DATA di Spreadsheet?");
-            if (peringatan) {
-                // Kosongkan layar
+            if (confirm("⚠️ PERHATIAN!\nYakin ingin MENGHAPUS SEMUA DATA di Spreadsheet?")) {
                 dataJurnal = [];
                 tampilkanData();
-                
-                // Kosongkan Spreadsheet
-                google.script.run.kosongkanSemuaDataDiSheet();
+                await kirimDataKeSheet({ action: "clear" });
             }
-        } else {
-            alert("PIN Salah!");
-        }
+        } else alert("PIN Salah!");
     }
 
-    // Fungsi Export CSV
+    // Export CSV
     function exportCSV() {
-        if (dataYangDitampilkan.length === 0) {
-            alert("Tidak ada data untuk diekspor!");
-            return;
-        }
+        if (dataYangDitampilkan.length === 0) return alert("Tidak ada data untuk diekspor!");
         let csvContent = "data:text/csv;charset=utf-8,Tanggal,Mapel,Kelas,Materi,Aktivitas,Catatan\n";
         dataYangDitampilkan.forEach(row => {
             const materiSafe = `"${String(row.materi).replace(/"/g, '""')}"`;
@@ -308,14 +240,12 @@
             csvContent += `${row.tanggal},${row.mapel},${row.kelas},${materiSafe},${aktivitasSafe},${catatanSafe}\n`;
         });
         const link = document.createElement("a");
-        const filterMapel = document.getElementById('filterMapel').value;
         link.setAttribute("href", encodeURI(csvContent));
-        link.setAttribute("download", filterMapel !== 'semua' ? `Jurnal_${filterMapel.replace(/\s+/g, '_')}.csv` : "Jurnal_Semua_Mapel.csv");
+        link.setAttribute("download", "Jurnal_Guru.csv");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     }
 </script>
-
 </body>
 </html>
