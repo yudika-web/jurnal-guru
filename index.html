@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal Mengajar IPA & MTK</title>
+    <title>Jurnal Mengajar Guru SMP</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
         .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -26,7 +26,7 @@
         .filter-section { background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-top: 20px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; align-items: center;}
         .filter-group { display: flex; align-items: center; gap: 10px; }
         .filter-group select { width: auto; padding: 8px; }
-        .action-group { display: flex; gap: 10px; }
+        .action-group { display: flex; gap: 10px; flex-wrap: wrap; }
         
         /* Tabel */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
@@ -51,8 +51,18 @@
             <label>Mata Pelajaran</label>
             <select id="mapel" required>
                 <option value="">-- Pilih Mapel --</option>
-                <option value="IPA">Ilmu Pengetahuan Alam (IPA)</option>
+                <option value="Pendidikan Agama Islam">Pendidikan Agama Islam (PAI)</option>
+                <option value="Pendidikan Agama Kristen">Pendidikan Agama Kristen (PAK)</option>
+                <option value="Pancasila">Pendidikan Pancasila / PKn</option>
+                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
                 <option value="Matematika">Matematika (MTK)</option>
+                <option value="IPA">Ilmu Pengetahuan Alam (IPA)</option>
+                <option value="IPS">Ilmu Pengetahuan Sosial (IPS)</option>
+                <option value="Bahasa Inggris">Bahasa Inggris</option>
+                <option value="PJOK">Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)</option>
+                <option value="Seni Budaya">Seni Budaya</option>
+                <option value="TIK">Informatika / TIK</option>
+                <option value="BK">Bimbingan Konseling (BK)</option>
             </select>
         </div>
         <div class="form-group">
@@ -69,11 +79,11 @@
         </div>
         <div class="form-group">
             <label>Materi / Topik</label>
-            <input type="text" id="materi" placeholder="Contoh: Sistem Tata Surya / Aljabar" required>
+            <input type="text" id="materi" placeholder="Contoh: Sistem Tata Surya / Teks Deskripsi / Aljabar" required>
         </div>
         <div class="form-group">
             <label>Aktivitas Siswa</label>
-            <textarea id="aktivitas" rows="3" placeholder="Contoh: Mengerjakan LKS, Diskusi Kelompok..." required></textarea>
+            <textarea id="aktivitas" rows="3" placeholder="Contoh: Mengerjakan LKS, Praktikum, Diskusi Kelompok..." required></textarea>
         </div>
         <div class="form-group">
             <label>Catatan Guru (Opsional)</label>
@@ -92,8 +102,18 @@
             <label>Tampilkan Mapel:</label>
             <select id="filterMapel" onchange="tampilkanData()">
                 <option value="semua">Semua Mapel</option>
-                <option value="IPA">Hanya IPA</option>
-                <option value="Matematika">Hanya Matematika</option>
+                <option value="Pendidikan Agama Islam">PAI</option>
+                <option value="Pendidikan Agama Kristen">PAK</option>
+                <option value="Pancasila">Pancasila</option>
+                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                <option value="Matematika">Matematika</option>
+                <option value="IPA">IPA</option>
+                <option value="IPS">IPS</option>
+                <option value="Bahasa Inggris">Bahasa Inggris</option>
+                <option value="PJOK">PJOK</option>
+                <option value="Seni Budaya">Seni Budaya</option>
+                <option value="TIK">Informatika / TIK</option>
+                <option value="BK">BK</option>
             </select>
         </div>
 
@@ -109,7 +129,7 @@
 
         <div class="action-group">
             <button class="btn-export" onclick="exportCSV()">Unduh CSV</button>
-            <button class="btn-danger" onclick="hapusSemuaData()">Kosongkan Semua Data</button>
+            <button class="btn-danger" onclick="hapusSemuaData()">Kosongkan Data</button>
         </div>
     </div>
 
@@ -143,7 +163,7 @@
         e.preventDefault();
         
         const entriBaru = {
-            id: Date.now(), // Tambahan ID unik agar mudah dihapus per-baris
+            id: Date.now(),
             tanggal: document.getElementById('tanggal').value,
             mapel: document.getElementById('mapel').value,
             kelas: document.getElementById('kelas').value,
@@ -159,8 +179,7 @@
         
         localStorage.setItem('jurnalGuru', JSON.stringify(dataJurnal));
         
-        // Reset form tapi biarkan tanggal tetap hari ini
-        document.getElementById('mapel').value = "";
+        // Reset form tapi biarkan tanggal dan mapel tetap sama agar memudahkan input beruntun
         document.getElementById('kelas').value = "";
         document.getElementById('materi').value = "";
         document.getElementById('aktivitas').value = "";
@@ -197,7 +216,7 @@
         });
 
         if (dataYangDitampilkan.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Tidak ada data. Silakan isi form di atas.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Tidak ada data yang sesuai dengan filter.</td></tr>';
             return;
         }
 
@@ -220,16 +239,10 @@
 
     // Fungsi Hapus Satu Baris Data
     function hapusBaris(idItem) {
-        // Tampilkan pesan konfirmasi
         let konfirmasi = confirm("Apakah Anda yakin ingin menghapus data jurnal ini?");
         if (konfirmasi) {
-            // Saring (filter) data, sisakan yang ID-nya tidak sama dengan yang dihapus
             dataJurnal = dataJurnal.filter(item => item.id !== idItem);
-            
-            // Simpan kembali ke penyimpanan browser
             localStorage.setItem('jurnalGuru', JSON.stringify(dataJurnal));
-            
-            // Perbarui tampilan tabel
             tampilkanData();
         }
     }
@@ -241,17 +254,13 @@
             return;
         }
 
-        // Peringatan ganda agar tidak terhapus tidak sengaja
-        let peringatan = confirm("⚠️ PERHATIAN!\n\nApakah Anda yakin ingin MENGHAPUS SEMUA DATA JURNAL?\nPastikan Anda sudah mengunduh (Download CSV) jika data ini masih penting.\n\nKlik 'OK' untuk menghapus semuanya secara permanen.");
+        let peringatan = confirm("⚠️ PERHATIAN!\n\nApakah Anda yakin ingin MENGHAPUS SEMUA DATA JURNAL?\n\nKlik 'OK' untuk menghapus semuanya secara permanen.");
         
         if (peringatan) {
-            // Kosongkan array data
             dataJurnal = [];
-            // Hapus dari penyimpanan browser
             localStorage.removeItem('jurnalGuru');
-            // Perbarui tampilan
             tampilkanData();
-            alert("Semua data berhasil dibersihkan! Anda bisa memulai dari awal lagi.");
+            alert("Semua data berhasil dibersihkan!");
         }
     }
 
@@ -277,10 +286,13 @@
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         
+        // Membuat nama file otomatis berdasarkan filter
         const filterMapel = document.getElementById('filterMapel').value;
-        let namaFile = "Jurnal_Mengajar_Guru.csv";
-        if (filterMapel === 'IPA') namaFile = "Jurnal_Mengajar_IPA.csv";
-        if (filterMapel === 'Matematika') namaFile = "Jurnal_Mengajar_Matematika.csv";
+        let namaFile = "Jurnal_Mengajar_Semua_Mapel.csv";
+        if (filterMapel !== 'semua') {
+            // Mengganti spasi dengan garis bawah (underscore) agar rapi
+            namaFile = `Jurnal_Mengajar_${filterMapel.replace(/\s+/g, '_')}.csv`;
+        }
 
         link.setAttribute("href", encodedUri);
         link.setAttribute("download", namaFile);
@@ -289,10 +301,10 @@
         document.body.removeChild(link);
     }
 
-    // Perbaikan Data Lama (Jika pengguna punya data dari kode versi sebelumnya yang belum memiliki 'id')
+    // Perbaikan Data Lama
     dataJurnal = dataJurnal.map(item => {
         if (!item.id) {
-            item.id = Math.floor(Math.random() * 1000000000); // Beri ID acak
+            item.id = Math.floor(Math.random() * 1000000000);
         }
         return item;
     });
