@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Mengajar IPA & MTK</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1, h2 { color: #2c3e50; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #34495e; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        
+        /* Tombol Dasar */
+        button { color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: 0.3s;}
+        .btn-primary { background-color: #3498db; width: 100%; }
+        .btn-primary:hover { background-color: #2980b9; }
+        .btn-export { background-color: #27ae60; }
+        .btn-export:hover { background-color: #2ecc71; }
+        .btn-danger { background-color: #e74c3c; }
+        .btn-danger:hover { background-color: #c0392b; }
+        .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 3px; }
+        
+        /* Layout Filter */
+        .filter-section { background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-top: 20px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; align-items: center;}
+        .filter-group { display: flex; align-items: center; gap: 10px; }
+        .filter-group select { width: auto; padding: 8px; }
+        .action-group { display: flex; gap: 10px; }
+        
+        /* Tabel */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #34495e; color: white; }
+        tbody tr:nth-child(even) { background-color: #f9f9f9; }
+        .empty-state { text-align: center; font-style: italic; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Jurnal Mengajar Guru</h1>
+    
+    <!-- Formulir Input -->
+    <form id="jurnalForm">
+        <div class="form-group">
+            <label>Tanggal</label>
+            <input type="date" id="tanggal" required>
+        </div>
+        <div class="form-group">
+            <label>Mata Pelajaran</label>
+            <select id="mapel" required>
+                <option value="">-- Pilih Mapel --</option>
+                <option value="IPA">Ilmu Pengetahuan Alam (IPA)</option>
+                <option value="Matematika">Matematika (MTK)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Kelas</label>
+            <select id="kelas" required>
+                <option value="">-- Pilih Kelas --</option>
+                <option value="7A">7A</option>
+                <option value="7B">7B</option>
+                <option value="8A">8A</option>
+                <option value="8B">8B</option>
+                <option value="9A">9A</option>
+                <option value="9B">9B</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Materi / Topik</label>
+            <input type="text" id="materi" placeholder="Contoh: Sistem Tata Surya / Aljabar" required>
+        </div>
+        <div class="form-group">
+            <label>Aktivitas Siswa</label>
+            <textarea id="aktivitas" rows="3" placeholder="Contoh: Mengerjakan LKS, Diskusi Kelompok..." required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Catatan Guru (Opsional)</label>
+            <textarea id="catatan" rows="2" placeholder="Catatan, kendala, atau refleksi setelah mengajar..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Simpan Jurnal</button>
+    </form>
+
+    <hr style="margin: 30px 0; border: 1px solid #bdc3c7;">
+
+    <!-- Bagian Laporan & Filter -->
+    <h2>Riwayat & Output Jurnal</h2>
+    
+    <div class="filter-section">
+        <div class="filter-group">
+            <label>Tampilkan Mapel:</label>
+            <select id="filterMapel" onchange="tampilkanData()">
+                <option value="semua">Semua Mapel</option>
+                <option value="IPA">Hanya IPA</option>
+                <option value="Matematika">Hanya Matematika</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Waktu:</label>
+            <select id="filterWaktu" onchange="tampilkanData()">
+                <option value="semua">Semua Waktu</option>
+                <option value="harian">Hari Ini</option>
+                <option value="mingguan">7 Hari Terakhir</option>
+                <option value="bulanan">Bulan Ini</option>
+            </select>
+        </div>
+
+        <div class="action-group">
+            <button class="btn-export" onclick="exportCSV()">Unduh CSV</button>
+            <button class="btn-danger" onclick="hapusSemuaData()">Kosongkan Semua Data</button>
+        </div>
+    </div>
+
+    <table id="jurnalTable">
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Mapel</th>
+                <th>Kelas</th>
+                <th>Materi</th>
+                <th>Aktivitas</th>
+                <th>Catatan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan dimunculkan di sini menggunakan JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Set tanggal default ke hari ini
+    document.getElementById('tanggal').valueAsDate = new Date();
+
+    let dataJurnal = JSON.parse(localStorage.getItem('jurnalGuru')) || [];
+    let dataYangDitampilkan = [];
+
+    // Fungsi menyimpan data
+    document.getElementById('jurnalForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const entriBaru = {
+            id: Date.now(), // Tambahan ID unik agar mudah dihapus per-baris
+            tanggal: document.getElementById('tanggal').value,
+            mapel: document.getElementById('mapel').value,
+            kelas: document.getElementById('kelas').value,
+            materi: document.getElementById('materi').value,
+            aktivitas: document.getElementById('aktivitas').value,
+            catatan: document.getElementById('catatan').value || "-"
+        };
+
+        dataJurnal.push(entriBaru);
+        
+        // Urutkan data berdasarkan tanggal terbaru
+        dataJurnal.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+        
+        localStorage.setItem('jurnalGuru', JSON.stringify(dataJurnal));
+        
+        // Reset form tapi biarkan tanggal tetap hari ini
+        document.getElementById('mapel').value = "";
+        document.getElementById('kelas').value = "";
+        document.getElementById('materi').value = "";
+        document.getElementById('aktivitas').value = "";
+        document.getElementById('catatan').value = "";
+        
+        tampilkanData();
+        alert('Data Jurnal Berhasil Disimpan!');
+    });
+
+    // Fungsi menampilkan & filter data
+    function tampilkanData() {
+        const tbody = document.querySelector('#jurnalTable tbody');
+        tbody.innerHTML = '';
+        
+        const filterWaktu = document.getElementById('filterWaktu').value;
+        const filterMapel = document.getElementById('filterMapel').value;
+        
+        const hariIniFormat = new Date().toISOString().split('T')[0];
+        const hariIni = new Date(hariIniFormat);
+
+        dataYangDitampilkan = dataJurnal.filter(item => {
+            if (filterMapel !== 'semua' && item.mapel !== filterMapel) return false;
+            if (filterWaktu === 'semua') return true;
+            
+            const tglItem = new Date(item.tanggal);
+            const selisihWaktu = Math.abs(hariIni - tglItem);
+            const selisihHari = Math.ceil(selisihWaktu / (1000 * 60 * 60 * 24));
+            
+            if (filterWaktu === 'harian') return item.tanggal === hariIniFormat;
+            if (filterWaktu === 'mingguan') return selisihHari <= 7 && tglItem <= hariIni;
+            if (filterWaktu === 'bulanan') return tglItem.getMonth() === hariIni.getMonth() && tglItem.getFullYear() === hariIni.getFullYear();
+            
+            return true;
+        });
+
+        if (dataYangDitampilkan.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Tidak ada data. Silakan isi form di atas.</td></tr>';
+            return;
+        }
+
+        dataYangDitampilkan.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${item.tanggal}</td>
+                <td><strong>${item.mapel}</strong></td>
+                <td>${item.kelas}</td>
+                <td>${item.materi}</td>
+                <td>${item.aktivitas}</td>
+                <td>${item.catatan}</td>
+                <td>
+                    <button class="btn-danger btn-sm" onclick="hapusBaris(${item.id})">Hapus</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Fungsi Hapus Satu Baris Data
+    function hapusBaris(idItem) {
+        // Tampilkan pesan konfirmasi
+        let konfirmasi = confirm("Apakah Anda yakin ingin menghapus data jurnal ini?");
+        if (konfirmasi) {
+            // Saring (filter) data, sisakan yang ID-nya tidak sama dengan yang dihapus
+            dataJurnal = dataJurnal.filter(item => item.id !== idItem);
+            
+            // Simpan kembali ke penyimpanan browser
+            localStorage.setItem('jurnalGuru', JSON.stringify(dataJurnal));
+            
+            // Perbarui tampilan tabel
+            tampilkanData();
+        }
+    }
+
+    // Fungsi Hapus SEMUA Data
+    function hapusSemuaData() {
+        if (dataJurnal.length === 0) {
+            alert("Data sudah kosong!");
+            return;
+        }
+
+        // Peringatan ganda agar tidak terhapus tidak sengaja
+        let peringatan = confirm("⚠️ PERHATIAN!\n\nApakah Anda yakin ingin MENGHAPUS SEMUA DATA JURNAL?\nPastikan Anda sudah mengunduh (Download CSV) jika data ini masih penting.\n\nKlik 'OK' untuk menghapus semuanya secara permanen.");
+        
+        if (peringatan) {
+            // Kosongkan array data
+            dataJurnal = [];
+            // Hapus dari penyimpanan browser
+            localStorage.removeItem('jurnalGuru');
+            // Perbarui tampilan
+            tampilkanData();
+            alert("Semua data berhasil dibersihkan! Anda bisa memulai dari awal lagi.");
+        }
+    }
+
+    // Fungsi Ekspor ke CSV berdasarkan data yang tampil
+    function exportCSV() {
+        if (dataYangDitampilkan.length === 0) {
+            alert("Tidak ada data yang bisa diekspor pada tampilan saat ini!");
+            return;
+        }
+
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Tanggal,Mapel,Kelas,Materi,Aktivitas,Catatan\n";
+
+        dataYangDitampilkan.forEach(row => {
+            const materiSafe = `"${row.materi.replace(/"/g, '""')}"`;
+            const aktivitasSafe = `"${row.aktivitas.replace(/"/g, '""')}"`;
+            const catatanSafe = `"${row.catatan.replace(/"/g, '""')}"`;
+            
+            let rowData = `${row.tanggal},${row.mapel},${row.kelas},${materiSafe},${aktivitasSafe},${catatanSafe}`;
+            csvContent += rowData + "\n";
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        
+        const filterMapel = document.getElementById('filterMapel').value;
+        let namaFile = "Jurnal_Mengajar_Guru.csv";
+        if (filterMapel === 'IPA') namaFile = "Jurnal_Mengajar_IPA.csv";
+        if (filterMapel === 'Matematika') namaFile = "Jurnal_Mengajar_Matematika.csv";
+
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", namaFile);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Perbaikan Data Lama (Jika pengguna punya data dari kode versi sebelumnya yang belum memiliki 'id')
+    dataJurnal = dataJurnal.map(item => {
+        if (!item.id) {
+            item.id = Math.floor(Math.random() * 1000000000); // Beri ID acak
+        }
+        return item;
+    });
+
+    tampilkanData();
+</script>
+
+</body>
+</html>
